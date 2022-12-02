@@ -19,6 +19,7 @@ executable aoc
     import:           warnings
     main-is:          Main.hs
     other-modules:    Day1
+                    , Day2
     -- other-extensions:
     build-depends:    base
                     , megaparsec
