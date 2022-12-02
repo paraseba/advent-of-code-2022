@@ -20,6 +20,7 @@ executable aoc
     main-is:          Main.hs
     other-modules:    Day1
                     , Day2
+                    , Utils
     -- other-extensions:
     build-depends:    base
                     , megaparsec

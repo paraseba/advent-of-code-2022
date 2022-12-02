@@ -4,14 +4,10 @@ module Day2 where
 
 import Text.Megaparsec.Char
 import Text.Megaparsec hiding (sepBy1, sepEndBy1)
-import Data.Void (Void)
-import Data.Text qualified as T
 import Control.Applicative.Combinators.NonEmpty (sepEndBy1)
 import Data.List.NonEmpty (NonEmpty)
-import qualified Data.Text.IO as TIO
 import Control.Lens
-
-type Parser = Parsec Void T.Text
+import Utils (parseAndSolve, calculateBoth, Parser)
 
 data Play = Rock | Paper | Scissors
     deriving (Show)
@@ -66,22 +62,15 @@ fixInterpretation (Scissors, Rock) = Paper
 fixInterpretation (Scissors, Paper) = Scissors
 fixInterpretation (Scissors, Scissors) = Rock
 
-main :: IO ()
-main = do
-    input <- TIO.readFile "day2.txt"
-    case parse guideP "day2.txt" input of
-         Left err -> putStrLn (errorBundlePretty err)
-         Right g -> do
-            print $ calculate1 g
-            print $ calculate2 g
-    putStrLn "Done"
 
-calculate1 :: NonEmpty (Play, Play) -> Integer
-calculate1 = sumOf (traverse.to roundScore)
+solve1 :: NonEmpty (Play, Play) -> Integer
+solve1 = sumOf (traverse.to roundScore)
 
-calculate2 :: NonEmpty (Play, Play) -> Integer
-calculate2 = sumOf (traverse.to fix.to roundScore)
+solve2 :: NonEmpty (Play, Play) -> Integer
+solve2 = sumOf (traverse.to fix.to roundScore)
     where
         fix :: (Play, Play) -> (Play, Play)
         fix r = r & _2 .~ (fixInterpretation r)
 
+main :: IO ()
+main = parseAndSolve 2 guideP (calculateBoth solve1 solve2)
