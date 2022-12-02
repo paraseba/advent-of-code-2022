@@ -1,0 +1,31 @@
+cabal-version:      3.4
+name:               aoc
+version:            0.1.0.0
+-- synopsis:
+-- description:
+license:            MIT
+license-file:       LICENSE
+author:             Sebastian Galkin
+maintainer:         paraseba@gmail.com
+-- copyright:
+build-type:         Simple
+extra-doc-files:    CHANGELOG.md
+-- extra-source-files:
+
+common warnings
+    ghc-options: -Wall
+
+executable aoc
+    import:           warnings
+    main-is:          Main.hs
+    other-modules:    Day1
+    -- other-extensions:
+    build-depends:    base
+                    , megaparsec
+                    , text
+                    , parser-combinators
+                    , lens
+
+    hs-source-dirs:   app
+                    , src
+    default-language: GHC2021
