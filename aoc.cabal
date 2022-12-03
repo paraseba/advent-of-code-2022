@@ -18,15 +18,17 @@ common warnings
 executable aoc
     import:           warnings
     main-is:          Main.hs
-    other-modules:    Day1
+    other-modules:    Utils
+                    , Day1
                     , Day2
-                    , Utils
+                    , Day3
     -- other-extensions:
     build-depends:    base
                     , megaparsec
                     , text
                     , parser-combinators
                     , lens
+                    , containers
 
     hs-source-dirs:   app
                     , src
