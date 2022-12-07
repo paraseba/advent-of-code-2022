@@ -36,9 +36,11 @@ actions = some1 action
 move :: Int -> Int -> State Stacks ()
 move fromStack toStack = do
     s <- use (ix (fromStack - 1))
-    let Just (top, remaining) = uncons s
-    ix (toStack - 1) %= (top:)
-    ix (fromStack - 1) .= remaining
+    case uncons s of
+        Just (top, remaining) -> do
+            ix (toStack - 1) %= (top:)
+            ix (fromStack - 1) .= remaining
+        Nothing -> pure ()
 
 moveN :: Action -> State Stacks ()
 moveN (Action qty fromStack toStack) = replicateM_ qty (move fromStack toStack)
