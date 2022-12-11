@@ -19,7 +19,7 @@ pair = (\a b c d -> ((a,b),(c,d)))
        <*> decimal
 
 main :: IO ()
-main = parseAndSolve 4 assignments (calculateBoth solve1 solve2)
+main = parseAndSolve 4 assignments solve1 solve2
 
 containedIn :: Ord a => (a, a) -> (a, a) -> Bool
 containedIn (i1, i2) (o1, o2) = o1 <= i1 && i2 <= o2
@@ -36,5 +36,5 @@ overlapping ((a,b),(c,d)) =
 solve1 :: NonEmpty ((Int, Int), (Int, Int)) -> Int
 solve1 = lengthOf (folded.filtered contained)
 
-solve2 :: NonEmpty ((Int, Int), (Int, Int)) -> Int
-solve2 = lengthOf (folded.filtered overlapping)
+solve2 :: prev -> NonEmpty ((Int, Int), (Int, Int)) -> Int
+solve2 _ = lengthOf (folded.filtered overlapping)

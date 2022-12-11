@@ -13,6 +13,7 @@ import Data.Sequence (Seq)
 import qualified Data.Sequence as Seq
 import Control.Monad (replicateM)
 import Data.List (sort)
+import Utils
 
 newtype MonkeyId  = MonkeyId Int
   deriving (Num, Eq, Show, Enum)
@@ -94,17 +95,18 @@ run config = execState (replicateM rounds (evalRound config)) monkeys <&> extrac
     monkeys = config ^. monkeyVector
 
 business :: Vector (Integer, Seq Integer) -> Integer
--- business = sortBy (compare `on` fst) . toList
 business =  product . take 2 . reverse . sort . map fst . toList
 
 calcModulo :: Vector Monkey -> Integer
 calcModulo = productOf (folded.mDiv)
 
-main :: IO ()
-main = do
-    let config1 = Config 3 (calcModulo inputMonkeys) 20 inputMonkeys
-        config2 = Config 1 (calcModulo inputMonkeys) 10_000 inputMonkeys
-    print $ business $ run config1
-    print $ business $ run config2
-    putStrLn "Done"
+solve1 :: IO ()
+solve1 = putStrLn . show $ business $ run config
+  where config = Config 3 (calcModulo inputMonkeys) 20 inputMonkeys
 
+solve2 :: prev -> IO ()
+solve2 _ = putStrLn . show $ business $ run config
+  where config = Config 1 (calcModulo inputMonkeys) 10_000 inputMonkeys
+
+main :: IO ()
+main = solve solve1 solve2

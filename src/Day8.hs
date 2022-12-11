@@ -107,8 +107,8 @@ dirVisibility vm current others =
                   in if length others == lower then lower else lower + 1
   where h = mapAt vm current
 
-solve2 :: HeightMap -> Maybe (Coords, Int)
-solve2 hm = maximumByOf folded (compare `on` snd) $ (\c -> (c, visibility c)) <$> allCoords
+solve2 :: prev -> HeightMap -> Maybe (Coords, Int)
+solve2 _ hm = maximumByOf folded (compare `on` snd) $ (\c -> (c, visibility c)) <$> allCoords
   where
     n = length hm
     allCoords = [(row, col)| row <- [0..n-1], col <- [0..n-1] ]
@@ -119,5 +119,5 @@ solve2 hm = maximumByOf folded (compare `on` snd) $ (\c -> (c, visibility c)) <$
         * dirVisibility hm c (visibleCoords n c !! 3)
 
 main :: IO ()
-main = parseAndSolve 8 hmP (calculateBoth solve1 solve2)
+main = parseAndSolve 8 hmP solve1 solve2
 

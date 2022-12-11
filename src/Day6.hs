@@ -1,21 +1,20 @@
 module Day6 where
 
 import Control.Lens
-import Data.Set.Lens (setOf)
 import Data.List (tails)
+import Data.Set.Lens (setOf)
+import Utils
 
 main :: IO ()
-main = do
-    putStrLn $ "Part 1: " <> show (solve 4)
-    putStrLn $ "Part 2: " <> show (solve 14)
+main = solve (putStrLn . show $ go 4) (\_ -> putStrLn . show $ go 14)
 
-solve :: Int -> Int
-solve markerSize = 
-    message 
-    & tails
-    & toListOf (takingWhile (not . isMarker markerSize) folded)
-    & lengthOf folded
-    & (+ markerSize)
+go :: Int -> Int
+go markerSize =
+    message
+        & tails
+        & toListOf (takingWhile (not . isMarker markerSize) folded)
+        & lengthOf folded
+        & (+ markerSize)
 
 isMarker :: Int -> String -> Bool
 isMarker n = (== n) . lengthOf folded . setOf (taking n folded)

@@ -7,7 +7,7 @@ import Text.Megaparsec hiding (sepBy1, sepEndBy1)
 import Control.Applicative.Combinators.NonEmpty (sepEndBy1)
 import Data.List.NonEmpty (NonEmpty)
 import Control.Lens
-import Utils (parseAndSolve, calculateBoth, Parser)
+import Utils (parseAndSolve, Parser)
 
 data Play = Rock | Paper | Scissors
     deriving (Show)
@@ -66,11 +66,11 @@ fixInterpretation (Scissors, Scissors) = Rock
 solve1 :: NonEmpty (Play, Play) -> Integer
 solve1 = sumOf (traverse.to roundScore)
 
-solve2 :: NonEmpty (Play, Play) -> Integer
-solve2 = sumOf (traverse.to fix.to roundScore)
+solve2 :: prev -> NonEmpty (Play, Play) -> Integer
+solve2 _ = sumOf (traverse.to fix.to roundScore)
     where
         fix :: (Play, Play) -> (Play, Play)
         fix r = r & _2 .~ (fixInterpretation r)
 
 main :: IO ()
-main = parseAndSolve 2 guideP (calculateBoth solve1 solve2)
+main = parseAndSolve 2 guideP solve1 solve2

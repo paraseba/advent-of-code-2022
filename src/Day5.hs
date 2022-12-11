@@ -54,13 +54,13 @@ moveN2 (Action qty fromStack toStack) = do
     ix (fromStack - 1) .= remaining
 
 main :: IO ()
-main = parseAndSolve 5 actions (calculateBoth solve1 solve2)
+main = parseAndSolve 5 actions solve1 solve2
 
 solve1 :: Traversable t => t Action -> [Char]
 solve1 moves = toList $ execState (traverse moveN moves) initial <&> head
 
-solve2 :: Traversable t => t Action -> [Char]
-solve2 moves = toList $ execState (traverse moveN2 moves) initial <&> head
+solve2 :: Traversable t => prev -> t Action -> [Char]
+solve2 _ moves = toList $ execState (traverse moveN2 moves) initial <&> head
 
 type Stacks = Seq.Seq [Char]
 

@@ -12,7 +12,7 @@ import Data.Sequence.Lens (slicedFrom, slicedTo)
 import Data.Set qualified as Set
 import Data.Set.Lens (setOf)
 import Text.Megaparsec.Char (eol, letterChar)
-import Utils (Parser, calculateBoth, parseAndSolve)
+import Utils (Parser, parseAndSolve)
 
 type Contents = Seq.Seq Char
 
@@ -40,13 +40,13 @@ score contents =
      in maybe 0 priority c
 
 main :: IO ()
-main = parseAndSolve 3 rucksacks (calculateBoth solve1 solve2)
+main = parseAndSolve 3 rucksacks solve1 solve2
 
 solve1 :: Seq.Seq Contents -> Int
 solve1 = sumOf (folded . to score)
 
-solve2 :: Seq.Seq Contents -> Int
-solve2 packs =
+solve2 :: prev -> Seq.Seq Contents -> Int
+solve2 _ packs =
     packs
         & Seq.chunksOf 3
         & over (mapped . mapped) (setOf folded)

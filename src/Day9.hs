@@ -95,10 +95,10 @@ applyMoves knots moves =
     applyMove (move, n) = replicateM_ n (moveHead move)
 
 main :: IO ()
-main = parseAndSolve 9 path (calculateBoth solve1 solve2)
+main = parseAndSolve 9 path solve1 solve2
 
 solve1 :: NonEmpty (Move, Int) -> Int
 solve1 = lengthOf folded . Set.fromList . applyMoves 2
 
-solve2 :: NonEmpty (Move, Int) -> Int
-solve2 = lengthOf folded . Set.fromList . applyMoves 10
+solve2 :: prev -> NonEmpty (Move, Int) -> Int
+solve2 _ = lengthOf folded . Set.fromList . applyMoves 10

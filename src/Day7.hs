@@ -100,8 +100,8 @@ computeSizes ses =
 solve1 :: Traversable t => t (Either Command Node) -> Integer
 solve1 ses = computeSizes ses & sumOf (folded . filtered (< 100000))
 
-solve2 :: Traversable t => t (Either Command Node) -> Maybe Integer
-solve2 ses = minimumOf (folded . filtered (> toFree)) sizes
+solve2 :: Traversable t => prev -> t (Either Command Node) -> Maybe Integer
+solve2 _ ses = minimumOf (folded . filtered (> toFree)) sizes
   where
     sizes = computeSizes ses
     used = sizes ^. (at [] . non 0)
@@ -110,4 +110,4 @@ solve2 ses = minimumOf (folded . filtered (> toFree)) sizes
     toFree = needed - unused
 
 main :: IO ()
-main = parseAndSolve 7 session (calculateBoth solve1 solve2)
+main = parseAndSolve 7 session solve1 solve2
