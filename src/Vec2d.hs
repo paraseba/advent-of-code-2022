@@ -9,17 +9,21 @@ import Control.Lens
 data Vec2d a = Vec2d (Vector a) Int
   deriving (Functor, Foldable, Traversable, Show)
 
-newtype Row = Row Int deriving (Eq, Ord, Num, Show)
-newtype Col = Col Int deriving (Eq, Ord, Num, Show)
+newtype Row = Row Int deriving (Eq, Ord, Enum, Num, Show)
+newtype Col = Col Int deriving (Eq, Ord, Enum, Num, Show)
 
 type Coord = (Row, Col)
 
 
 (!) :: Vec2d a -> Coord -> a
 vec@(Vec2d as _) ! pos = as V.! index2d vec pos
+{-# INLINE (!) #-}
+
+infixl 9 !
 
 index2d :: Vec2d a -> Coord -> Int
 index2d (Vec2d _ rowSize) (Row row, Col col) = row * rowSize + col
+{-# INLINE index2d #-}
 
 fromList :: [[a]] -> Vec2d a
 fromList [] = Vec2d V.empty 0
@@ -35,10 +39,16 @@ withinBounds (Vec2d backend rowSize) (Row row, Col col) =
 
 numCols :: Vec2d a -> Int
 numCols (Vec2d _ s) = s
+{-# INLINE numCols #-}
 
 numRows :: Vec2d a -> Int
 numRows vec@(Vec2d backend _) = length backend `div` numCols vec
+{-# INLINE numRows #-}
 
+(//) :: Vec2d a -> [(Coord, a)] -> Vec2d a
+vec@(Vec2d backend size) // values = Vec2d new size
+  where new = backend V.// (values & (traversed._1) %~ index2d vec)
+{-# INLINE (//) #-}
 
 type instance Index (Vec2d a) = Coord
 type instance IxValue (Vec2d a) = a
