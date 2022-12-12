@@ -35,3 +35,4 @@ solve solve1 solve2 = do
     putStrLn "=================   PART 2   ================="
     solve2 b
     putStrLn "\n\nDone"
+

@@ -9,6 +9,7 @@ import Text.Read (readMaybe)
 import Day1 qualified as D1
 import Day10 qualified as D10
 import Day11 qualified as D11
+import Day12 qualified as D12
 import Day2 qualified as D2
 import Day3 qualified as D3
 import Day4 qualified as D4
@@ -32,6 +33,7 @@ days =
         , D9.main
         , D10.main
         , D11.main
+        , D12.main
         ]
 
 dayToAction :: Int -> IO ()
