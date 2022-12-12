@@ -40,13 +40,13 @@ dayToAction :: Int -> IO ()
 dayToAction day =
     fromMaybe (putStrLn "Day not implemented") $ days ^? (ix (day - 1))
 
-parseArgs :: IO Int
-parseArgs = do
-    args <- getArgs
-    pure $ fromMaybe 1 $ firstOf folded args >>= readMaybe
+parseArgs :: IO [Maybe Int]
+parseArgs = getArgs & (mapped.traversed) %~ readMaybe
 
-main :: IO ()
-main = do
-    day <- parseArgs
+runDay :: Int -> IO ()
+runDay day = do
     putStrLn $ "Running day " <> show day
     dayToAction day
+
+main :: IO ()
+main = parseArgs >>= traverseOf_ (traversed._Just) runDay
