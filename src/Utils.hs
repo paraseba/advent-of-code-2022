@@ -36,3 +36,6 @@ solve solve1 solve2 = do
     solve2 b
     putStrLn "\n\nDone"
 
+manhattan :: Num a => (a, a) -> (a, a) -> a
+manhattan (x1, y1) (x2, y2) = abs (x1 - x2) + abs (y1 - y2)
+

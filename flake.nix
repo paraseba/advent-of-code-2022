@@ -28,6 +28,10 @@
                   haskell-language-server = {}; # "1.7.0.0";
                 };
                 shell.withHoogle = false;
+                modules = [{
+                    enableLibraryProfiling = true; 
+                    # enableExecutableProfiling = true; 
+                  }];
                 ## Non-Haskell shell tools go here
                 #shellFor.packages = with pkgs; [
                 #  nixpkgs-fmt
