@@ -33,6 +33,7 @@ executable aoc
                     , Day11
                     , Day12
                     , Day13
+                    , Day14
     -- other-extensions:
     build-depends:    base
                     , megaparsec
@@ -40,6 +41,8 @@ executable aoc
                     , parser-combinators
                     , lens
                     , containers
+                    , unordered-containers
+                    , hashable
                     , mtl
                     , vector
 

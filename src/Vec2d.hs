@@ -5,12 +5,13 @@ module Vec2d where
 import Data.Vector (Vector)
 import qualified Data.Vector as V
 import Control.Lens
+import Data.Hashable (Hashable)
 
 data Vec2d a = Vec2d (Vector a) Int
   deriving (Functor, Foldable, Traversable, Show)
 
-newtype Row = Row Int deriving (Eq, Ord, Enum, Num, Show)
-newtype Col = Col Int deriving (Eq, Ord, Enum, Num, Show)
+newtype Row = Row Int deriving (Eq, Ord, Enum, Num, Show, Hashable)
+newtype Col = Col Int deriving (Eq, Ord, Enum, Num, Show, Hashable)
 
 type Coord = (Row, Col)
 

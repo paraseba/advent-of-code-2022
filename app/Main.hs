@@ -11,6 +11,7 @@ import Day10 qualified as D10
 import Day11 qualified as D11
 import Day12 qualified as D12
 import Day13 qualified as D13
+import Day14 qualified as D14
 import Day2 qualified as D2
 import Day3 qualified as D3
 import Day4 qualified as D4
@@ -36,6 +37,7 @@ days =
         , D11.main
         , D12.main
         , D13.main
+        , D14.main
         ]
 
 dayToAction :: Int -> IO ()
