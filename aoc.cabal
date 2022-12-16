@@ -35,6 +35,7 @@ executable aoc
                     , Day13
                     , Day14
                     , Day15
+                    , Day16
     -- other-extensions:
     build-depends:    base
                     , megaparsec
@@ -47,6 +48,7 @@ executable aoc
                     , mtl
                     , vector
                     , data-interval
+                    , parallel
 
     hs-source-dirs:   app
                     , src
@@ -54,4 +56,6 @@ executable aoc
     ghc-options:
         -O2
         -threaded
+        -rtsopts
+
 
