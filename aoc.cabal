@@ -54,5 +54,4 @@ executable aoc
     ghc-options:
         -O2
         -threaded
-        -fprof-auto
-       --  "-with-rtsopts=-N -p -s"
+

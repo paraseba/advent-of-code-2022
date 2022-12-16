@@ -29,8 +29,7 @@
                 };
                 shell.withHoogle = false;
                 modules = [{
-                    enableLibraryProfiling = true; 
-                    # enableExecutableProfiling = true; 
+                    enableLibraryProfiling = false; 
                   }];
                 ## Non-Haskell shell tools go here
                 #shellFor.packages = with pkgs; [
