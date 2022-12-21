@@ -37,6 +37,7 @@ executable aoc
                     , Day15
                     , Day17
                     , Day18
+                    , Day19
     -- other-extensions:
     build-depends:    base
                     , megaparsec
@@ -50,6 +51,7 @@ executable aoc
                     , vector
                     , data-interval
                     , extra
+                    , parallel
 
     hs-source-dirs:   app
                     , src
