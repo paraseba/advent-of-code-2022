@@ -38,6 +38,7 @@ executable aoc
                     , Day17
                     , Day18
                     , Day19
+                    , Day20
     -- other-extensions:
     build-depends:    base
                     , megaparsec

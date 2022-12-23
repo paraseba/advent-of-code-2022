@@ -17,6 +17,7 @@ import Day17 qualified as D17
 import Day18 qualified as D18
 import Day19 qualified as D19
 import Day2 qualified as D2
+import Day20 qualified as D20
 import Day3 qualified as D3
 import Day4 qualified as D4
 import Day5 qualified as D5
@@ -47,6 +48,7 @@ days =
         , D17.main
         , D18.main
         , D19.main
+        , D20.main
         ]
 
 dayToAction :: Int -> IO ()
@@ -54,7 +56,7 @@ dayToAction day =
     fromMaybe (putStrLn "Day not implemented") $ days ^? (ix (day - 1))
 
 parseArgs :: IO [Maybe Int]
-parseArgs = getArgs & (mapped.traversed) %~ readMaybe
+parseArgs = getArgs & (mapped . traversed) %~ readMaybe
 
 runDay :: Int -> IO ()
 runDay day = do
@@ -62,4 +64,4 @@ runDay day = do
     dayToAction day
 
 main :: IO ()
-main = parseArgs >>= traverseOf_ (traversed._Just) runDay
+main = parseArgs >>= traverseOf_ (traversed . _Just) runDay
