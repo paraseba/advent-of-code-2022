@@ -141,7 +141,7 @@ solve2 _ = putStrLn $ maybe "No solutions" show $ minimumOf (folded . _Right) re
 testMap :: HeightMap
 testMap =
     fromList
-        [ "Sabqponm"
+        [ "Sabqponm" :: String
         , "abcryxxl"
         , "accszExk"
         , "acctuvwj"
@@ -151,7 +151,7 @@ testMap =
 inputMap :: HeightMap
 inputMap =
     fromList
-        [ "abccccccccaaaaccccaaacaccccaaaaaacccccccccccaaaccccccccccaaaaaaacccccccccccccccccccccccccccccacaaaccccccccccccccccccccccccccccccccccccccccaaaaa"
+        [ "abccccccccaaaaccccaaacaccccaaaaaacccccccccccaaaccccccccccaaaaaaacccccccccccccccccccccccccccccacaaaccccccccccccccccccccccccccccccccccccccccaaaaa" :: String
         , "abccccccccaaaaccaaaaaaaacccaaaaaacccccccccccaaaacccccccccaaaaaaaaaacccccccccccccccaaccccccccaaaaaccaaaccaacccccccccccccccccccccccccccccccaaaaaa"
         , "abcccccccccaacccaaaaaaaaccccaaaaacccccccccccaaaacccccccaaaaaaaaaaaaaccccccccccaaaaaaccccccccaaaaaaaaaaaaaaccccccccccccccccaaaccccccccccccaaaaaa"
         , "abcccccccccccccccaaaaaccccccaacaaccccaacccccaaacccccccaaaaaaaaaaaaaaccccccccccaaaaaaacccccccccaaaaacaaaaaaccccccccccccccccaaccccccccccccccccaaa"

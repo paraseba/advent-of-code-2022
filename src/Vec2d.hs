@@ -2,19 +2,18 @@
 
 module Vec2d where
 
-import Data.Vector (Vector)
-import qualified Data.Vector as V
 import Control.Lens
 import Data.Hashable (Hashable)
+import Data.Vector (Vector)
+import Data.Vector qualified as V
 
 data Vec2d a = Vec2d (Vector a) Int
-  deriving (Functor, Foldable, Traversable, Show)
+    deriving (Functor, Foldable, Traversable, Show)
 
 newtype Row = Row Int deriving (Eq, Ord, Enum, Num, Show, Hashable)
 newtype Col = Col Int deriving (Eq, Ord, Enum, Num, Show, Hashable)
 
 type Coord = (Row, Col)
-
 
 (!) :: Vec2d a -> Coord -> a
 vec@(Vec2d as _) ! pos = as V.! index2d vec pos
@@ -26,10 +25,11 @@ index2d :: Vec2d a -> Coord -> Int
 index2d (Vec2d _ rowSize) (Row row, Col col) = row * rowSize + col
 {-# INLINE index2d #-}
 
-fromList :: [[a]] -> Vec2d a
+fromList :: Foldable t => [t a] -> Vec2d a
 fromList [] = Vec2d V.empty 0
-fromList rows@(as:_) = Vec2d backend (length as)
-    where backend = V.fromList (rows ^.. (folded.folded))
+fromList rows@(as : _) = Vec2d backend (length as)
+  where
+    backend = V.fromList (rows ^.. (folded . folded))
 
 singleton :: a -> Vec2d a
 singleton a = Vec2d (V.singleton a) 1
@@ -42,36 +42,44 @@ numCols :: Vec2d a -> Int
 numCols (Vec2d _ s) = s
 {-# INLINE numCols #-}
 
+numCols' :: Vec2d a -> Col
+numCols' v = Col (numCols v)
+{-# INLINE numCols' #-}
+
 numRows :: Vec2d a -> Int
 numRows vec@(Vec2d backend _) = length backend `div` numCols vec
 {-# INLINE numRows #-}
 
+numRows' :: Vec2d a -> Row
+numRows' v = Row (numRows v)
+{-# INLINE numRows' #-}
+
 (//) :: Vec2d a -> [(Coord, a)] -> Vec2d a
 vec@(Vec2d backend size) // values = Vec2d new size
-  where new = backend V.// (values & (traversed._1) %~ index2d vec)
+  where
+    new = backend V.// (values & (traversed . _1) %~ index2d vec)
 {-# INLINE (//) #-}
 
 type instance Index (Vec2d a) = Coord
 type instance IxValue (Vec2d a) = a
 
-instance Ixed (Vec2d a) where 
+instance Ixed (Vec2d a) where
     ix :: Coord -> Traversal' (Vec2d a) a
     ix coord f vec@(Vec2d backend rowSize)
-      | withinBounds vec coord =
-        f (vec ! coord) <&> \a -> Vec2d (backend V.// [(index2d vec coord, a)]) rowSize
-      | otherwise = pure vec
-      
+        | withinBounds vec coord =
+            f (vec ! coord) <&> \a -> Vec2d (backend V.// [(index2d vec coord, a)]) rowSize
+        | otherwise = pure vec
 
 instance FunctorWithIndex Coord Vec2d
 instance FoldableWithIndex Coord Vec2d
 
 instance TraversableWithIndex Coord Vec2d where
-   itraverse :: Applicative f => (Coord -> a -> f b) -> Vec2d a -> f (Vec2d b) 
-   itraverse f (Vec2d backend rowSize) =
-      Vec2d <$> traverse (uncurry f) withCoords <*> pure rowSize
+    itraverse :: Applicative f => (Coord -> a -> f b) -> Vec2d a -> f (Vec2d b)
+    itraverse f (Vec2d backend rowSize) =
+        Vec2d <$> traverse (uncurry f) withCoords <*> pure rowSize
       where
         coords = V.generate (V.length backend) toCoord
-        toCoord i = (Row $ i `div` rowSize , Col $ i `mod` rowSize)
+        toCoord i = (Row $ i `div` rowSize, Col $ i `mod` rowSize)
         withCoords = V.zip coords backend
 
 instance Applicative Vec2d where
@@ -80,7 +88,7 @@ instance Applicative Vec2d where
     Vec2d fs fsize <*> Vec2d as asize = Vec2d (fs <*> as) (fsize * asize)
 
 {- Applicative laws
- - 
+ -
  - pure id <*> v = v
  -   Vec2d (V.singleton id) 1 <*> Vec2d v cols = Vec2d v (1 * cols)
  -
@@ -102,4 +110,3 @@ instance Applicative Vec2d where
  - = pure ($ y) <*> Vec2d uvec usize
  - = pure ($ y) <*> u
  -}
-
