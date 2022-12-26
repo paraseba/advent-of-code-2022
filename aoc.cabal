@@ -71,4 +71,5 @@ executable aoc
         -threaded
         -rtsopts
         -fprof-auto
+        "-with-rtsopts=-N"
 

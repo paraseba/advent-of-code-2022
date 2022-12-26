@@ -67,7 +67,10 @@ dayToAction day =
     fromMaybe (putStrLn "Day not implemented") $ days ^? (ix (day - 1))
 
 parseArgs :: IO [Maybe Int]
-parseArgs = getArgs & (mapped . traversed) %~ readMaybe
+parseArgs = getArgs <&> parse
+  where
+    parse [] = Just <$> [1 .. 25]
+    parse ds = ds & traversed %~ readMaybe
 
 runDay :: Int -> IO ()
 runDay day = do
