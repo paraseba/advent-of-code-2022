@@ -63,9 +63,8 @@ inspectDir :: HeightMap -> [[Coord]] -> [Coord]
 inspectDir hm coords = concatMap (inspectLine hm) coords
 
 markInvisible :: Dir -> [Coord] -> VisibilityMap -> VisibilityMap
-markInvisible dir coords vm = foldr modify vm coords
-  where
-    modify coord v = v // [(coord, Set.insert dir (v ! coord))]
+markInvisible dir coords vm = vm // (update <$> coords)
+  where update coord =  (coord, Set.insert dir (vm ! coord))
 
 solve1 :: HeightMap -> Int
 solve1 hm =
