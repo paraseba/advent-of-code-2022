@@ -25,7 +25,7 @@ parseAndSolveIO day parser solve1 solve2 = do
         Left err -> liftIO $ putStrLn (errorBundlePretty err)
         Right d -> solve (solve1 d) (\prev -> solve2 prev d)
   where
-    fileName = "day" <> show day <> ".txt"
+    fileName = "./inputs/day" <> show day <> ".txt"
 
 solve :: MonadIO m => m b -> (b -> m ()) -> m ()
 solve solve1 solve2 = do
