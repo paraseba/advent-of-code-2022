@@ -13,6 +13,7 @@ import Day12 qualified as D12
 import Day13 qualified as D13
 import Day14 qualified as D14
 import Day15 qualified as D15
+import Day16 qualified as D16
 import Day17 qualified as D17
 import Day18 qualified as D18
 import Day19 qualified as D19
@@ -47,7 +48,7 @@ days =
         , D13.main
         , D14.main
         , D15.main
-        , D15.main ------ placeholder for day 16
+        , D16.main
         , D17.main
         , D18.main
         , D19.main
