@@ -8,7 +8,7 @@ import Data.Vector (Vector)
 import Data.Vector qualified as V
 
 data Vec2d a = Vec2d (Vector a) Int
-    deriving (Functor, Foldable, Traversable, Show)
+    deriving (Functor, Foldable, Traversable, Eq, Ord, Show)
 
 newtype Row = Row Int deriving (Eq, Ord, Enum, Num, Show, Hashable)
 newtype Col = Col Int deriving (Eq, Ord, Enum, Num, Show, Hashable)

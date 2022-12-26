@@ -43,6 +43,7 @@ executable aoc
                     , Day21
                     , Day22
                     , Day23
+                    , Day24
 
     -- other-extensions:
     build-depends:    base
@@ -53,10 +54,12 @@ executable aoc
                     , containers
                     , unordered-containers
                     , hashable
+                    , transformers
                     , mtl
                     , vector
                     , data-interval
                     , extra
+                    , search-algorithms
                     , parallel
 
     hs-source-dirs:   app
@@ -66,5 +69,5 @@ executable aoc
         -O2
         -threaded
         -rtsopts
-
+        -fprof-auto
 

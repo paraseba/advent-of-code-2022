@@ -20,16 +20,14 @@
                 src = ./.;
                 compiler-nix-name = "ghc925";
                 evalSystem = "x86_64-linux";
-                # This is used by `nix develop .` to open a shell for use with
-                # `cabal`, `hlint` and `haskell-language-server`
                 shell.tools = {
                   cabal = {};
                   hlint = {};
-                  haskell-language-server = {}; # "1.7.0.0";
+                  haskell-language-server = {};
                 };
                 shell.withHoogle = false;
                 modules = [{
-                    enableLibraryProfiling = false; 
+                    enableLibraryProfiling = true; 
                   }];
                 ## Non-Haskell shell tools go here
                 #shellFor.packages = with pkgs; [
